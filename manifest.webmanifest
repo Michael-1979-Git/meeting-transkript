@@ -1,0 +1,16 @@
+{
+  "name": "Meeting-Transkript",
+  "short_name": "Meeting",
+  "description": "Meetings aufnehmen und auf Hochdeutsch transkribieren",
+  "lang": "de",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f4f5f8",
+  "theme_color": "#1f2a44",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

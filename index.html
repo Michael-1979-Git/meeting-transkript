@@ -799,6 +799,7 @@ function setTab(t) {
 }
 document.querySelectorAll('.tabs button').forEach(b => b.onclick = () => setTab(b.dataset.t));
 async function meetingAction(a, id) {
+  clearTimeout(titleT); await saveTitle();
   const m = await dbGet('meetings', id); if (!m) return;
   if (a === 'exp') exportAudio(m);
   else if (a === 'tr') processMeeting(id);
@@ -819,7 +820,16 @@ async function meetingAction(a, id) {
     toast('Gelöscht.'); showView('list');
   }
 }
-$('#mTitle').onchange = async () => { const m = await dbGet('meetings', currentMeetingId); if (m) { m.title = $('#mTitle').value.trim() || m.title; await dbPut('meetings', m); } };
+async function saveTitle() {
+  const id = currentMeetingId, v = $('#mTitle').value.trim();
+  if (!id || !v) return;
+  const m = await dbGet('meetings', id);
+  if (m && m.title !== v) { m.title = v; await dbPut('meetings', m); }
+}
+let titleT;
+$('#mTitle').addEventListener('input', () => { clearTimeout(titleT); titleT = setTimeout(saveTitle, 300); });
+$('#mTitle').addEventListener('change', saveTitle);
+$('#mTitle').addEventListener('blur', saveTitle);
 async function saveSpeakers() {
   const m = await dbGet('meetings', currentMeetingId); if (!m) return null;
   m.speakers = m.speakers || {};
